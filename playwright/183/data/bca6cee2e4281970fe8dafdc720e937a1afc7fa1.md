@@ -1,0 +1,48 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e5]:
+      - paragraph [ref=e7]: シフト管理
+      - generic [ref=e8]:
+        - link "マイページ" [ref=e9] [cursor=pointer]:
+          - /url: /mypage
+          - button "マイページ" [ref=e10]:
+            - img [ref=e11]
+            - text: マイページ
+        - link "シフト管理" [ref=e16] [cursor=pointer]:
+          - /url: /shifts
+          - button "シフト管理" [ref=e17]:
+            - img [ref=e18]
+            - text: シフト管理
+        - link "勤怠記録" [ref=e20] [cursor=pointer]:
+          - /url: /attendance
+          - button "勤怠記録" [ref=e21]:
+            - img [ref=e22]
+            - text: 勤怠記録
+        - link "店舗一覧" [ref=e25] [cursor=pointer]:
+          - /url: /shops
+          - button "店舗一覧" [ref=e26]:
+            - img [ref=e27]
+            - text: 店舗一覧
+        - link "設定" [ref=e32] [cursor=pointer]:
+          - /url: /settings
+          - button "設定" [ref=e33]:
+            - img [ref=e34]
+            - text: 設定
+      - button "ログアウト" [ref=e38] [cursor=pointer]:
+        - img [ref=e39]
+        - text: ログアウト
+    - generic [ref=e46]:
+      - heading "所属する店舗がありません" [level=2] [ref=e47]
+      - generic [ref=e48]:
+        - paragraph [ref=e49]: 招待メールを受け取っている場合は、リンクから参加できます
+        - paragraph [ref=e50]: または新しい店舗を登録してシフト管理を始めましょう
+      - link "店舗を登録する" [ref=e51] [cursor=pointer]:
+        - /url: /shops/new
+        - button "店舗を登録する" [ref=e52]:
+          - img [ref=e53]
+          - text: 店舗を登録する
+  - region "top-start Notifications alt+T"
+```
