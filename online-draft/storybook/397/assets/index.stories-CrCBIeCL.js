@@ -1,0 +1,16 @@
+import{j as e}from"./iframe-RlG1jcEu.js";import{u as x,s as y}from"./states-TCS8mwE7.js";import{I as s}from"./index-CkkV2h8f.js";import{u as D}from"./utils-Hyq53JDb.js";import"./preload-helper-Dp1pzeXC.js";import"./index-RKMvwcxj.js";import"./factory-n0XrCoXN.js";import"./responsive-modal-Bdo-IWTZ.js";import"./index-DKU8_rGA.js";import"./create-slot-recipe-context-B6SO3hUu.js";import"./render-strategy-BKyw0Cjf.js";import"./use-breakpoint-DzLnDp4J.js";import"./v-stack-DN8eplg_.js";import"./useChat-BNFixBEK.js";import"./common-CxXojnM3.js";import"./index.esm-ClM2GOLW.js";import"./zod-CiJG07Vp.js";import"./useModal-D_Wdx75F.js";import"./h-stack-Cwz9MMsq.js";import"./index-HKIpGz3m.js";var a,d,n,l,m,u,p,c,_,v,S,f,A,I,M;const{fn:i}=__STORYBOOK_MODULE_TEST__,E=({initialValues:g,children:j})=>(D(g),j),O=[{id:"user1",name:"タナカ",avatar:"1"},{id:"user2",name:"サトウ",avatar:"2"}],H=[{item:"プロ野球選手",comment:"速い球投げそう",round:1,userId:"user1",groupId:"group1",randomNumber:.5}],Q={title:"features/draft/modals/ItemSelectModal",component:s,parameters:{layout:"centered"},args:{onClose:i()}},r={render:()=>e.jsx(E,{initialValues:[[x,O],[y,[]]],children:e.jsx(s,{isOpen:!0,onClose:i(),userId:"user1",round:1})})},o={render:()=>e.jsx(E,{initialValues:[[x,O],[y,H]],children:e.jsx(s,{isOpen:!0,onClose:i(),userId:"user1",round:1})})},t={render:()=>e.jsx(E,{initialValues:[[x,O],[y,[]]],children:e.jsx(s,{isOpen:!0,onClose:i(),userId:"user1",round:0})})};r.parameters={...r.parameters,docs:{...(a=r.parameters)===null||a===void 0?void 0:a.docs,source:{originalSource:`{
+  render: () => <HydrateAtoms initialValues={[[usersAtom, testUsers], [selectionsAtom, []]]}>
+      <ItemSelectModal isOpen={true} onClose={fn()} userId="user1" round={1} />
+    </HydrateAtoms>
+}`,...(n=r.parameters)===null||n===void 0||(d=n.docs)===null||d===void 0?void 0:d.source},description:{story:`新規選択モード
+userId/roundがセットされているが、既存の選択がない状態`,...(m=r.parameters)===null||m===void 0||(l=m.docs)===null||l===void 0?void 0:l.description}}};o.parameters={...o.parameters,docs:{...(u=o.parameters)===null||u===void 0?void 0:u.docs,source:{originalSource:`{
+  render: () => <HydrateAtoms initialValues={[[usersAtom, testUsers], [selectionsAtom, existingSelections]]}>
+      <ItemSelectModal isOpen={true} onClose={fn()} userId="user1" round={1} />
+    </HydrateAtoms>
+}`,...(c=o.parameters)===null||c===void 0||(p=c.docs)===null||p===void 0?void 0:p.source},description:{story:`編集モード
+既存の選択があり、編集コンテキストが表示される状態`,...(v=o.parameters)===null||v===void 0||(_=v.docs)===null||_===void 0?void 0:_.description}}};t.parameters={...t.parameters,docs:{...(S=t.parameters)===null||S===void 0?void 0:S.docs,source:{originalSource:`{
+  render: () => <HydrateAtoms initialValues={[[usersAtom, testUsers], [selectionsAtom, []]]}>
+      <ItemSelectModal isOpen={true} onClose={fn()} userId="user1" round={0} />
+    </HydrateAtoms>
+}`,...(A=t.parameters)===null||A===void 0||(f=A.docs)===null||f===void 0?void 0:f.source},description:{story:`デフォルト状態
+基本的なモーダル表示（round=0で初期状態）`,...(M=t.parameters)===null||M===void 0||(I=M.docs)===null||I===void 0?void 0:I.description}}};const W=["NewSelection","EditMode","Default"];export{t as Default,o as EditMode,r as NewSelection,W as __namedExportsOrder,Q as default};
