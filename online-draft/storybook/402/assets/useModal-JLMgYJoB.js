@@ -1,0 +1,1 @@
+import{r as s}from"./iframe-CPNykFu4.js";const i=()=>{const[t,e]=s.useState(!1);return{isOpen:t,open:()=>e(!0),close:()=>e(!1)}},M=(t,e)=>{const{isOpen:o,open:n,close:a}=i(),[r,c]=s.useState(e);return{isOpen:o,variant:r,open:p=>{const l=p||t[Math.floor(Math.random()*t.length)];c(l),n()},close:a}};export{M as a,i as u};
