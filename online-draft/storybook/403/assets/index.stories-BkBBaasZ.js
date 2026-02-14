@@ -1,0 +1,12 @@
+import{j as a}from"./iframe-CPNykFu4.js";import{T as D}from"./index.esm-ClM2GOLW.js";import{u as f,c as A,a as M}from"./states-BgKcEv6C.js";import{C as g}from"./index-Df2wO6Th.js";import{u as x}from"./utils-Bl2jajJ7.js";import"./preload-helper-Dp1pzeXC.js";import"./index-DINeRgO7.js";import"./use-merged-ref-DuAuqPT6.js";import"./create-slot-recipe-context-Cc8kd0Ma.js";import"./index-teljsW8k.js";import"./factory-DuFKs9iv.js";import"./index-DFT-raW7.js";import"./v-stack-ZFthQQXO.js";import"./h-stack-IZP0I_-8.js";import"./index-DeSftEHM.js";var i,d,m,n,u,p,l,c,_,v;const t=o=>{const e=new Date;return e.setMinutes(e.getMinutes()-o),D.fromDate(e)},h=[{id:"user1",name:"タナカ",avatar:"1"},{id:"user2",name:"サトウ",avatar:"2"},{id:"user3",name:"ヤマダ",avatar:"3"}],C=[{userId:"user1",message:"こんにちは〜！今日のドラフト楽しみだね！",date:t(5)},{userId:"user2",message:"そうだね！誰を1番に指名する？",date:t(4)},{userId:"user1",message:"悩むな〜。みんなはどう？",date:t(3)},{userId:"user3",message:"私はもう決めてるよ〜",date:t(2)}],y=({initialValues:o,children:e})=>(x(o),e),k={title:"Features/draft/ChatMessageList",component:g,parameters:{layout:"padded"}},s={render:()=>a.jsx(y,{initialValues:[[f,h],[A,"user1"],[M,C]],children:a.jsx(g,{})})},r={render:()=>a.jsx(y,{initialValues:[[f,h],[A,"user1"],[M,[]]],children:a.jsx(g,{})})};s.parameters={...s.parameters,docs:{...(i=s.parameters)===null||i===void 0?void 0:i.docs,source:{originalSource:`{
+  render: () => <HydrateAtoms initialValues={[[usersAtom, testUsers], [currentUserIdAtom, 'user1'], [chatsAtom, defaultChats]]}>
+      <ChatMessageList />
+    </HydrateAtoms>
+}`,...(m=s.parameters)===null||m===void 0||(d=m.docs)===null||d===void 0?void 0:d.source},description:{story:`デフォルト表示
+複数ユーザーの会話を表示`,...(u=s.parameters)===null||u===void 0||(n=u.docs)===null||n===void 0?void 0:n.description}}};r.parameters={...r.parameters,docs:{...(p=r.parameters)===null||p===void 0?void 0:p.docs,source:{originalSource:`{
+  render: () => <HydrateAtoms initialValues={[[usersAtom, testUsers], [currentUserIdAtom, 'user1'], [chatsAtom, []] // 空のチャット
+  ]}>
+      <ChatMessageList />
+    </HydrateAtoms>
+}`,...(c=r.parameters)===null||c===void 0||(l=c.docs)===null||l===void 0?void 0:l.source},description:{story:`メッセージなし
+チャットメッセージが空の状態`,...(v=r.parameters)===null||v===void 0||(_=v.docs)===null||_===void 0?void 0:_.description}}};const q=["Default","NoMessage"];export{s as Default,r as NoMessage,q as __namedExportsOrder,k as default};
