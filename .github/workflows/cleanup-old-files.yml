@@ -29,11 +29,11 @@ jobs:
           ref: main
           fetch-depth: 1
 
-      - name: Delete tracked files older than 14 days
+      - name: Delete tracked files older than 30 days
         id: cleanup
         env:
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
-          RETENTION_DAYS: "14"
+          RETENTION_DAYS: "30"
         shell: bash
         run: |
           set -euo pipefail
