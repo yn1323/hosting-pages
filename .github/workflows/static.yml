@@ -31,13 +31,50 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Prepare Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p _site
+          published_count=0
+
+          while IFS= read -r -d '' file; do
+            case "$file" in
+              README.md|.github/*|*.gitkeep)
+                continue
+                ;;
+            esac
+
+            mkdir -p "_site/$(dirname "$file")"
+            cp "$file" "_site/$file"
+            published_count=$((published_count + 1))
+          done < <(git ls-files -z)
+
+          if (( published_count == 0 )); then
+            cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <title>No reports</title>
+            </head>
+            <body>
+              <p>No CI reports are currently available.</p>
+            </body>
+          </html>
+          EOF
+          fi
+
+          echo "Prepared $published_count file(s) for Pages."
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
