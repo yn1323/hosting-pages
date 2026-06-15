@@ -1,0 +1,130 @@
+# hosting-pages publishing contract
+
+This repository is an aggregation and publishing repository for CI reports
+from multiple source repositories.
+
+Source repositories should keep their GitHub Actions simple:
+they may push generated Playwright, VRT, Storybook, or other static report
+outputs into this repository. This repository is responsible for deciding
+what is published to GitHub Pages, what is kept only as raw artifacts, and
+what is cleaned up.
+
+## Source repository responsibilities
+
+A source repository may deploy a report by cloning this repository, replacing
+one report directory, committing, rebasing, and pushing to main.
+
+Recommended shape:
+
+- Playwright report:
+  - `<repo-slug>/<pull-request-number>/`
+  - Example: `yps-crispy-carnival/528/`
+
+- VRT report:
+  - `<repo-slug>-vrt/pr-<pull-request-number>/`
+  - Example: `yps-crispy-carnival-vrt/pr-533/`
+
+- VRT baseline:
+  - `<repo-slug>-vrt-baselines/<base-ref>/`
+  - Example: `yps-crispy-carnival-vrt-baselines/develop/`
+
+The source repository should remove and replace only its target directory.
+It should not create per-PR branches in this repository.
+
+## Recommended GitHub Actions push pattern
+
+Use a token that can push to `yn1323/hosting-pages`.
+
+```sh
+git clone --depth 1 --single-branch \
+  "https://x-access-token:${HOSTING_PAGES_TOKEN}@github.com/yn1323/hosting-pages.git" \
+  hosting-pages
+
+rm -rf "hosting-pages/${REPORT_DIR}/${REPORT_KEY}"
+mkdir -p "hosting-pages/${REPORT_DIR}/${REPORT_KEY}"
+cp -R "${LOCAL_REPORT_DIR}/." "hosting-pages/${REPORT_DIR}/${REPORT_KEY}/"
+
+cd hosting-pages
+git config user.name "github-actions[bot]"
+git config user.email "github-actions[bot]@users.noreply.github.com"
+git add .
+git commit -m "${REPORT_COMMIT_MESSAGE}" || exit 0
+git pull --rebase
+git push origin HEAD:main
+```
+
+For Playwright pull request reports:
+
+```sh
+REPORT_DIR="yps-crispy-carnival"
+REPORT_KEY="${PR_NUMBER}"
+LOCAL_REPORT_DIR="playwright-report"
+REPORT_COMMIT_MESSAGE="Playwright report for PR #${PR_NUMBER}"
+```
+
+For VRT pull request reports:
+
+```sh
+REPORT_DIR="yps-crispy-carnival-vrt"
+REPORT_KEY="pr-${PR_NUMBER}"
+LOCAL_REPORT_DIR="vrt-work/reg"
+REPORT_COMMIT_MESSAGE="VRT report for PR #${PR_NUMBER}"
+```
+
+For VRT branch reports:
+
+```sh
+REPORT_DIR="yps-crispy-carnival-vrt"
+REPORT_KEY="branches/${BRANCH_SLUG}"
+LOCAL_REPORT_DIR="vrt-work/reg"
+REPORT_COMMIT_MESSAGE="VRT report for ${BRANCH_NAME}"
+```
+
+## What source repositories should not do
+
+Source repositories should not try to optimize GitHub Pages payload size.
+They should not remove videos, traces, passed screenshots, or raw report files
+just for Pages performance.
+
+Those publishing decisions belong to this repository.
+
+Source repositories should also not create separate publishing branches for
+each PR. GitHub Pages publishes one site for this repository, and per-PR
+results should be represented as directories on `main`.
+
+## hosting-pages responsibilities
+
+This repository should:
+
+- build a `_site` directory for GitHub Pages from the current tracked files;
+- keep Pages payload lightweight;
+- exclude or relocate heavy raw artifacts such as `.webm`, trace `.zip`, and
+  large Playwright trace directories from the Pages artifact;
+- publish useful report entrypoints such as `index.html`, VRT `out.json`,
+  VRT `diff/`, and required VRT `actual/expected` images;
+- keep VRT baseline files available for future comparisons;
+- clean old report directories on a scheduled basis;
+- keep the Pages artifact below GitHub Pages limits.
+
+The source repository URL contract should remain stable. For example:
+
+- `https://yn1323.github.io/hosting-pages/yps-crispy-carnival/528/`
+- `https://yn1323.github.io/hosting-pages/yps-crispy-carnival-vrt/pr-533/`
+
+## Retention policy
+
+Short-lived PR report directories should be cleaned after 7 days unless a
+future workflow marks them as protected.
+
+VRT baselines are not ordinary reports. They should be protected from normal
+PR report cleanup because they are used as comparison inputs.
+
+## Notes for future agents
+
+When changing this repository, prefer centralizing report filtering here rather
+than requiring every source repository to implement the same filtering rules.
+
+Before changing cleanup or publishing behavior, inspect the actual current tree
+size and the generated GitHub Pages artifact size. The main risk is allowing
+large Playwright videos, trace zips, or full VRT passed-image sets to enter the
+Pages artifact.

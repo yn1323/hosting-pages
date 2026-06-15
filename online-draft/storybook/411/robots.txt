@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /draft/
-Disallow: /lobby/
-Disallow: /entry/
-
-Sitemap: https://online-draft.pages.dev/sitemap.xml
