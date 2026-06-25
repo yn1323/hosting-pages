@@ -1,0 +1,44 @@
+name: Prune hosted report retention
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '17 17 * * *'
+
+permissions:
+  contents: write
+
+env:
+  KEEP_VRT_PR_REPORTS: '5'
+  KEEP_PLAYWRIGHT_REPORTS: '12'
+
+concurrency:
+  group: prune-pages-reports
+  cancel-in-progress: false
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Prune old hosted reports
+        run: bash .github/scripts/prune-report-retention.sh
+
+      - name: Commit pruned reports
+        run: |
+          if git diff --quiet; then
+            echo "No report pruning needed."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A yps-crispy-carnival yps-crispy-carnival-vrt
+          git commit -m "Prune old hosted CI reports"
+          git push
