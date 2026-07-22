@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 1,
+  "result": "failure",
+  "pullRequest": {
+    "number": 705,
+    "headSha": "909f59566d2be39fb2347af0aea0652e50629d05"
+  },
+  "source": {
+    "runId": 29915295346,
+    "runAttempt": 1,
+    "actionsUrl": "https://github.com/yn1323/yps-crispy-carnival/actions/runs/29915295346"
+  },
+  "previewUrl": "https://pr-705.dev-yps-crispy-carnival.pages.dev/",
+  "summary": {
+    "total": 79,
+    "passed": 73,
+    "failed": 5,
+    "flaky": 1,
+    "skipped": 0,
+    "durationMs": 3200949
+  },
+  "tests": [
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-1",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 6385,
+      "retries": 0
+    },
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-2",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 4851,
+      "retries": 0
+    },
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-3",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 4775,
+      "retries": 0
+    },
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-4",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 4425,
+      "retries": 0
+    },
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-5",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 4158,
+      "retries": 0
+    },
+    {
+      "title": "fixtures/auth.setup.ts › prepare Clerk testing token and sign in: user-6",
+      "project": "setup",
+      "status": "expected",
+      "durationMs": 3992,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/free-manager-exchange.test.ts › Free管理者交代 › MM-P0-04: 送信前に交代結果を確認し、前任者のスタッフ所属と別グループ権限を維持する",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 41206,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/manager-invitation-collaboration.test.ts › 複数管理者の招待と共同管理 › MM-P0-01 / REG-P0-03: Cの本人不一致後にBが共同管理し、代表digestを受け取る",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 49206,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/manager-role-removal.test.ts › 管理者権限だけの解除 › MM-P0-02: Bの管理画面権限だけを外し、A店のスタッフ所属を維持する",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 34787,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/multiple-organization-switching.test.ts › 複数グループ切り替え › MG-P0-01: 同じ管理者が無関係な2グループを往復し、表示と更新を混入させない",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 23963,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/organization-deletion-flow.test.ts › グループ設定からのグループ削除 › OD-P0-01: 共有アカウントは別グループを継続利用でき、最後のグループ削除後は店舗登録へ戻る",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 34200,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/multiActor/organization-person-removal.test.ts › グループからの利用者削除 › MM-P0-03: Bを主グループから削除してもBの別グループ所属を維持する",
+      "project": "multi-actor-chromium",
+      "status": "expected",
+      "durationMs": 33695,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/auth-pages.test.ts › ログイン周り › ログイン済みでTOPへアクセスしてもLPが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 12939,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/auth-pages.test.ts › ログイン周り › 未ログイン › 認証必須ページはログイン画面へ誘導される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 13145,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/auth-pages.test.ts › ログイン周り › 未ログイン › ログイン・登録・パスワード再設定の導線でredirectが保持される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 13582,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/auth-pages.test.ts › ログイン周り › 未ログイン › メールアドレスとパスワードでログインできる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 16078,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/dashboard-pagination.test.ts › ダッシュボードの一覧表示 › シフト一覧とスタッフ一覧が期待件数で表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 42202,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/date-only-shift-full-flow.test.ts › 日付のみ方式のシフト確定 › 再提出から管理者編集、下書き、確定通知、スタッフ閲覧までつながる",
+      "project": "desktop-chromium",
+      "status": "unexpected",
+      "durationMs": 48693,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/first-shift-delivery.test.ts › 田中さんの初めてのシフト確定 › 初回セットアップから下書き保存、確定、スタッフ閲覧まで",
+      "project": "desktop-chromium",
+      "status": "unexpected",
+      "durationMs": 309812,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/legal-consent-flow.test.ts › 法務同意フロー › 管理者はダッシュボード上で再同意できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 22732,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/legal-consent-flow.test.ts › 法務同意フロー › スタッフはマジックリンクの同意ページで同意できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 14772,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/legal-consent-flow.test.ts › 法務同意フロー › 未同意スタッフは提出時に同意してシフト希望を提出できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 15692,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/line-link-token-flow.test.ts › LINE連携URL発行 › シフト担当者操作でLINE連携トークンが発行される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 24435,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-confirmation-view-flow.test.ts › 通知URL起点の確定シフト閲覧 › 確定URLで閲覧し、使用済みURLから再発行した新URLでも閲覧できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 58398,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-confirmation-view-flow.test.ts › 通知URL起点の確定シフト閲覧 › LINE連携済みスタッフへ確定通知と閲覧link再発行を受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 99379,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-failure-recovery.test.ts › 送れなかった通知のDashboard対応 › 対応不要・個別再通知・一斉再通知を使い分けられる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 40042,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › 初期設定時に管理者へLINE連携案内を受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 35736,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › 募集中の連絡先メール変更時に新しい宛先向け募集通知を受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 37040,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › ユーザー詳細からLINE連携案内を手動再送できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 35496,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › LINE連携済みスタッフへ募集中シフトを手動再送できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 40461,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › LINE unfollow中は募集中シフトをメールへ振り分ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 43786,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › ユーザー詳細から現在の確定シフトを手動通知できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 34184,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › LINE連携済みスタッフへ現在の確定シフトを手動通知できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 34772,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › REG-P0-03: 管理者向け登録・確定・稼働促進・不達digestをメールで受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 60740,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-release-matrix.test.ts › 正規グループの通知目的別Full Regression › REG-P0-03: LINE連携済み管理者へ4種digestを受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 57938,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-reminder-flow.test.ts › 通知URL起点のシフト提出催促 › 通常submitリンクから提出し、未提出表示が解消される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 36831,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-reminder-flow.test.ts › 通知URL起点のシフト提出催促 › LINE連携済みの未提出スタッフへ自動催促と提出CTAを受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 20206,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-reminder-flow.test.ts › 通知URL起点のシフト提出催促 › LINE連携済み管理者本人が未提出なら自動催促の対象になる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 19355,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-submit-flow.test.ts › 通知URL起点のシフト募集 › 募集開始で発行されたURLから提出し、シフト担当者画面に再編集まで反映される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 68954,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/notification-submit-flow.test.ts › 通知URL起点のシフト募集 › LINE連携済みスタッフへ募集開始通知と提出CTAを受け付ける",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 47523,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/open-recruitment-added-staff-notification.test.ts › 募集中の追加スタッフ通知 › MS-P0-02: A店スタッフをB店へ再利用し、B店の希望提出まで完了できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 89788,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/open-recruitment-added-staff-notification.test.ts › 募集中の追加スタッフ通知 › LINE follow時に募集中シフトの希望提出リンクが発行される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 61552,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/organization-billing-plan-change.test.ts › グループ課金プランの表示と上限復旧 › BILL-P0-02: 支払い不要Businessを保ち、BusinessからProへの変更後の超過を人物削除で復旧する",
+      "project": "desktop-chromium",
+      "status": "unexpected",
+      "durationMs": 125732,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/organization-deletion-flow.test.ts › 最後のグループの削除 › OD-P0-02: 名前確認を経て最後のグループを削除し、店舗登録へ戻っても個人情報を表示しない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 78778,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/organization-deletion-flow.test.ts › 支払い継続中のグループ削除制約 › OD-P0-03: active Proの支払いが続く間はグループ削除を開始できない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 14772,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/organization-shop-lifecycle.test.ts › グループの店舗追加・切り替え・編集 › MS-P0-01: B店の追加と編集をreload後も維持し、A店へ混入させない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 58002,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/recruitment-deletion.test.ts › シフト募集削除 › 未確定・確定済みの募集をダッシュボードから削除できる",
+      "project": "desktop-chromium",
+      "status": "unexpected",
+      "durationMs": 125493,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/release-support-accessibility.test.ts › 主要ページのaxeアクセシビリティ検査 › 公開TOPに既知のコントラスト課題以外のWCAG違反がない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 15248,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-accessibility.test.ts › 主要ページのaxeアクセシビリティ検査 › Dashboardに既知のコントラスト課題以外のWCAG違反がない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 21737,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-accessibility.test.ts › 主要ページのaxeアクセシビリティ検査 › スタッフ提出画面に既知のコントラスト課題以外のWCAG違反がない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 12258,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-auth-onboarding.test.ts › リリース前の認証・オンボーディング回帰 › ログアウト後に保護ページへ再アクセスするとログインへ戻される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 33361,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-auth-onboarding.test.ts › リリース前の認証・オンボーディング回帰 › 閉じたDashboardオンボーディングはreload後も再表示されない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 31924,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-feature-request.test.ts › リリース前の要望受付回帰 › 管理ユーザーがDashboardから要望を送信できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 19942,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › / の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 7628,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /features の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 5575,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /howto の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 8729,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /faq の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 7918,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /articles の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 7515,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /terms の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 5763,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /terms/staff の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 7486,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /privacy の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 6056,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /privacy/staff の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 6139,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › /contact の主要コンテンツが表示される",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 5484,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-public-contact.test.ts › 公開主要ルートのリリースsmoke › TOPの主要CTAから新規登録へ進める",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 8146,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/shop-deletion-flow.test.ts › グループ設定からの店舗削除 › MS-P0-03: 選択中のB店を削除し、B店専属スタッフを店舗所属なしで維持する",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 58396,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/shop-settings-submission-pattern-flow.test.ts › 勤務区分方式のシフト確定 › REG-P0-01: B店の再提出から確定閲覧までつながり、A店へ混入しない",
+      "project": "desktop-chromium",
+      "status": "flaky",
+      "durationMs": 220472,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/staff-after-confirmed-shift.test.ts › 確定後に追加したスタッフ › 既存シフトを保持して新しい行を追加し、割当後は変更対象だけへ閲覧通知する",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 82254,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-registration-review.test.ts › スタッフ登録申請の承認/却下 › REG-P0-02: B店のスタッフ登録申請をB店だけで承認できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 133428,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-registration-review.test.ts › スタッフ登録申請の承認/却下 › スタッフ登録→却下",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 35966,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-registration-review.test.ts › シフト担当者によるスタッフ招待 › 登録済みのメールアドレスではスタッフを追加できない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 23524,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-registration-review.test.ts › シフト担当者によるスタッフ招待 › 承認待ちのメールアドレスではスタッフを追加できない",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 27820,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-shift-submission.test.ts › スタッフのシフト希望提出 › 未提出→提出→修正→再提出のハッピーパス",
+      "project": "desktop-chromium",
+      "status": "unexpected",
+      "durationMs": 73346,
+      "retries": 1
+    },
+    {
+      "title": "scenarios/staff-shift-submission.test.ts › スタッフのシフト希望提出 › 日付のみ提出の短いハッピーパス",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 16028,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-shift-submission.test.ts › スタッフのシフト希望提出 › 締切後の未提出スタッフは確認後に初回提出でき、再アクセス時は閲覧のみになる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 23514,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-shift-submission.test.ts › スタッフのシフト希望提出 › 勤務区分提出の短いハッピーパス",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 12627,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/staff-shift-target-impact.test.ts › ユーザー詳細のシフト対象設定 › 下書き後の追加を反映し、対象外ではShiftFormと古いリンクから除外して復帰後に再送できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 90980,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/trial-ending-notice.test.ts › トライアル終了前の支払い案内 › BILL-P0-01: 全店舗で案内し、選択中店舗を保って支払い設定へ移動する",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 31321,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/user-shop-membership-flow.test.ts › ユーザー詳細の店舗所属管理 › MS-P0-04: 未所属店舗を一覧から隠し、追加ダイアログから所属を追加・解除できる",
+      "project": "desktop-chromium",
+      "status": "expected",
+      "durationMs": 44866,
+      "retries": 0
+    },
+    {
+      "title": "scenarios/release-support-staff-submit.mobile.test.ts › スタッフ提出のモバイル回帰 › スマートフォンで希望日を選び提出を完了できる",
+      "project": "mobile-chrome",
+      "status": "expected",
+      "durationMs": 10815,
+      "retries": 0
+    }
+  ]
+}
