@@ -1,0 +1,165 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: scenarios/organization-creation-flow.test.ts >> 新しいグループの作成 >> MG-P0-03: ダークローンチの公開状態と、グループ設定に出る導線が一致する
+- Location: e2e/scenarios/organization-creation-flow.test.ts:82:3
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('tab', { name: '店舗', exact: true })
+Expected: visible
+Timeout: 20000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 20000ms
+  - waiting for getByRole('tab', { name: '店舗', exact: true })
+
+```
+
+```yaml
+- region "Notifications, top (alt+T)"
+- heading "この店舗を開けません" [level=2]
+- paragraph: 店舗が削除されたか、この店舗を利用する権限がありません。ダッシュボードから利用できる店舗を選び直してください。
+- button "ダッシュボードへ戻る"
+```
+
+# Test source
+
+```ts
+  353 |     await this.expectToast("店舗の削除を受け付けました");
+  354 |     await expect(confirmation).not.toBeVisible();
+  355 |   }
+  356 | 
+  357 |   async cancelOrganizationDeletion(organizationName: string) {
+  358 |     const confirmation = await this.openOrganizationDeletionConfirmation();
+  359 |     await expect(confirmation.getByRole("button", { name: "このグループを削除" })).toBeDisabled();
+  360 |     await this.cancelOpenOrganizationDeletion(organizationName);
+  361 |   }
+  362 | 
+  363 |   async openOrganizationDeletionConfirmation() {
+  364 |     await this.openSettingsTab();
+  365 |     await this.page.getByRole("button", { name: "削除", exact: true }).click();
+  366 |     const confirmation = this.page.getByRole("alertdialog", { name: "グループを削除" });
+  367 |     await expect(confirmation).toBeVisible();
+  368 |     return confirmation;
+  369 |   }
+  370 | 
+  371 |   async cancelOpenOrganizationDeletion(organizationName: string) {
+  372 |     const confirmation = this.page.getByRole("alertdialog", { name: "グループを削除" });
+  373 |     await confirmation.getByRole("button", { name: "キャンセル" }).click();
+  374 |     await expect(confirmation).not.toBeVisible();
+  375 |     await this.expectOrganization(organizationName);
+  376 |   }
+  377 | 
+  378 |   async rejectMismatchedOrganizationDeletionName(organizationName: string, mismatchedName: string) {
+  379 |     const confirmation = await this.openOrganizationDeletionConfirmation();
+  380 |     const submit = confirmation.getByRole("button", { name: "このグループを削除" });
+  381 |     await confirmation.getByRole("textbox").fill(mismatchedName);
+  382 |     await expect(submit).toBeDisabled();
+  383 |     await confirmation.getByRole("button", { name: "キャンセル" }).click();
+  384 |     await expect(confirmation).not.toBeVisible();
+  385 |     await this.expectOrganization(organizationName);
+  386 |   }
+  387 | 
+  388 |   async deleteOrganization(organizationName: string, expectedShopId: string | null) {
+  389 |     const confirmation = await this.openOrganizationDeletionConfirmation();
+  390 |     const submit = confirmation.getByRole("button", { name: "このグループを削除" });
+  391 |     await expect(submit).toBeDisabled();
+  392 |     await confirmation.getByRole("textbox").fill(organizationName);
+  393 |     await expect(submit).toBeEnabled();
+  394 | 
+  395 |     // location.replaceで旧documentが切り離されても、最終URLの到達を同期値から検証する。
+  396 |     await Promise.all([
+  397 |       expect
+  398 |         .poll(
+  399 |           () => {
+  400 |             const url = new URL(this.page.url());
+  401 |             return { pathname: url.pathname, shopId: url.searchParams.get("shop") };
+  402 |           },
+  403 |           { timeout: SETTINGS_DATA_TIMEOUT },
+  404 |         )
+  405 |         .toEqual({ pathname: "/dashboard", shopId: expectedShopId }),
+  406 |       submit.click({ noWaitAfter: true }),
+  407 |     ]);
+  408 |   }
+  409 | 
+  410 |   async openUser(personName: string) {
+  411 |     await this.openPeopleTab();
+  412 |     const row = this.personRow(personName);
+  413 |     for (let pageIndex = 0; pageIndex < 10 && (await row.count()) === 0; pageIndex += 1) {
+  414 |       const loadMore = this.page.getByRole("button", { name: "もっと見る", exact: true });
+  415 |       if ((await loadMore.count()) === 0) break;
+  416 | 
+  417 |       const previousVisibleCount = new URL(this.page.url()).searchParams.get("users");
+  418 |       await loadMore.click();
+  419 |       await expect
+  420 |         .poll(() => new URL(this.page.url()).searchParams.get("users"), { timeout: SETTINGS_DATA_TIMEOUT })
+  421 |         .not.toBe(previousVisibleCount);
+  422 |     }
+  423 |     await expect(row).toBeVisible({ timeout: SETTINGS_DATA_TIMEOUT });
+  424 |     await row.click();
+  425 |     const detail = new UserDetailPage(this.page, personName);
+  426 |     await detail.expectLoaded();
+  427 |     return detail;
+  428 |   }
+  429 | 
+  430 |   private async openShop(shopName: string): Promise<Locator> {
+  431 |     await this.openShopsTab();
+  432 |     await this.shopRow(shopName).click();
+  433 |     await expect(this.page).toHaveURL(/\/shops\/[^/?]+/);
+  434 |     await expect(this.page.getByRole("heading", { name: "店舗詳細", exact: true })).toBeVisible();
+  435 |     await expect(this.page.getByText(shopName, { exact: true }).first()).toBeVisible();
+  436 |     return this.page.locator("body");
+  437 |   }
+  438 | 
+  439 |   private freeManagerExchangeDialog() {
+  440 |     return this.page.getByRole("dialog", { name: "次の管理者を招待" });
+  441 |   }
+  442 | 
+  443 |   private personRow(personName: string) {
+  444 |     return this.page.getByRole("button", { name: `${personName}のスタッフ詳細を開く` });
+  445 |   }
+  446 | 
+  447 |   private shopRow(shopName: string) {
+  448 |     return this.page.getByRole("button", { name: `${shopName}の店舗詳細を開く` });
+  449 |   }
+  450 | 
+  451 |   private async openTab(tab: SettingsTab) {
+  452 |     const trigger = this.tabTrigger(tab);
+> 453 |     await expect(trigger).toBeVisible({ timeout: SETTINGS_DATA_TIMEOUT });
+      |                           ^ Error: expect(locator).toBeVisible() failed
+  454 |     if ((await trigger.getAttribute("aria-selected")) !== "true") {
+  455 |       await trigger.click({ noWaitAfter: true });
+  456 |     }
+  457 |     await this.expectTabSelected(tab);
+  458 |   }
+  459 | 
+  460 |   private async expectTabSelected(tab: SettingsTab) {
+  461 |     await expect(this.tabTrigger(tab)).toHaveAttribute("aria-selected", "true", {
+  462 |       timeout: SETTINGS_DATA_TIMEOUT,
+  463 |     });
+  464 |   }
+  465 | 
+  466 |   private tabTrigger(tab: SettingsTab) {
+  467 |     return this.page.getByRole("tab", { name: SETTINGS_TAB_LABELS[tab], exact: true });
+  468 |   }
+  469 | 
+  470 |   private async expectToast(title: string) {
+  471 |     await expect(this.page.getByText(title, { exact: true }).first()).toBeVisible();
+  472 |   }
+  473 | }
+  474 | 
+  475 | function escapeRegExp(value: string) {
+  476 |   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  477 | }
+  478 | 
+```
