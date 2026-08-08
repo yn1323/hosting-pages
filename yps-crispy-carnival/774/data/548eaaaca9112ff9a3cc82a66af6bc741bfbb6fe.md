@@ -1,0 +1,84 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: scenarios/first-shift-delivery.test.ts >> 代表シフト導線 >> [E2E-SHIFT-01] 管理者の募集からスタッフ提出・確定・閲覧まで接続する
+- Location: e2e/scenarios/first-shift-delivery.test.ts:23:3
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByText(/のシフト$/)
+Expected: visible
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 10000ms
+  - waiting for getByText(/のシフト$/)
+
+```
+
+```yaml
+- region "Notifications, top (alt+T)"
+- banner:
+  - paragraph: シフト閲覧
+  - paragraph: Powered by
+  - img "シフトリ"
+  - paragraph: シフトリ
+- heading "このリンクではシフトを確認できません" [level=2]
+- paragraph: 下のボタンから、新しい閲覧リンクを受け取ってください。
+- link "新しい閲覧リンクを申し込む":
+  - /url: /shifts/reissue?recruitmentId=r1767kgt4gy4n7rfqgr665gh7h8c2x1m
+  - button "新しい閲覧リンクを申し込む"
+```
+
+# Test source
+
+```ts
+  1  | import { expect, type Locator, type Page } from "@playwright/test";
+  2  | 
+  3  | export class StaffViewPage {
+  4  |   constructor(private page: Page) {}
+  5  | 
+  6  |   async goto(token: string) {
+  7  |     try {
+  8  |       await this.page.goto(`/shifts/view?token=${token}`, { waitUntil: "domcontentloaded" });
+  9  |     } catch {
+  10 |       throw new Error("E2E capability navigation failed: staff-view");
+  11 |     }
+  12 |   }
+  13 | 
+  14 |   async expectShiftViewVisible() {
+> 15 |     await expect(this.page.getByText(/のシフト$/, { exact: true })).toBeVisible();
+     |                                                                 ^ Error: expect(locator).toBeVisible() failed
+  16 |   }
+  17 | 
+  18 |   async expectStaffVisible(name: string) {
+  19 |     await expect(this.staffRow(name)).toBeVisible();
+  20 |   }
+  21 | 
+  22 |   async expectShiftTimeVisible() {
+  23 |     await expect(
+  24 |       this.staffRows()
+  25 |         .getByText(/\d{1,2}:\d{2}/)
+  26 |         .first(),
+  27 |     ).toBeVisible();
+  28 |   }
+  29 | 
+  30 |   private staffRow(staffName: string): Locator {
+  31 |     return this.staffRows().filter({ hasText: staffName }).first();
+  32 |   }
+  33 | 
+  34 |   private staffRows() {
+  35 |     return this.page.locator("[data-tour^='shift-row-']");
+  36 |   }
+  37 | }
+  38 | 
+```
