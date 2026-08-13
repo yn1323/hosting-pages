@@ -1,0 +1,192 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: scenarios/manager-lifecycle.test.ts >> 管理者の招待受諾と権限解除 >> [E2E-MANAGER-02] 招待を別アカウントで受諾し、権限解除後もスタッフ所属を維持する
+- Location: e2e/scenarios/manager-lifecycle.test.ts:22:3
+
+# Error details
+
+```
+TimeoutError: locator.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for getByRole('radio', { name: '管理者受諾スタッフを選択', exact: true })
+    - locator resolved to <input type="radio" name="_r_8_" data-ownedby="radio-group:_r_8_" value="pn78j547b6a4q83rzw7rtmnwkn8cdmx2" id="radio-group:_r_8_:radio:input:pn78j547b6a4q83rzw7rtmnwkn8cdmx2" aria-labelledby="radio-group:_r_8_:radio:label:pn78j547b6a4q83rzw7rtmnwkn8cdmx2"/>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="css-1gdu0uk" data-state="unchecked">…</div> intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <div class="css-1gdu0uk" data-state="unchecked">…</div> intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    19 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <div class="css-1gdu0uk" data-state="unchecked">…</div> intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+```
+
+# Test source
+
+```ts
+  1   | import { expect, type Locator, type Page } from "@playwright/test";
+  2   | import { expectAppHydrated } from "../helpers/appReadiness";
+  3   | import type { ManagerSettingsScenarioSeed } from "../helpers/managerSettingsScenario";
+  4   | 
+  5   | const MANAGER_SETTINGS_TIMEOUT = 20_000;
+  6   | 
+  7   | type ManagerCandidateSeed = Pick<ManagerSettingsScenarioSeed, "shopId" | "candidateName" | "candidateEmail">;
+  8   | 
+  9   | export class ManagerSettingsPage {
+  10  |   constructor(private page: Page) {}
+  11  | 
+  12  |   async openFromOrganizationSettings(seed: ManagerCandidateSeed) {
+  13  |     await this.page.goto(`/settings?shop=${encodeURIComponent(seed.shopId)}`, {
+  14  |       waitUntil: "domcontentloaded",
+  15  |     });
+  16  |     await expectAppHydrated(this.page);
+  17  |     await expect(this.page.getByRole("tab", { name: "スタッフ", exact: true })).toHaveAttribute(
+  18  |       "aria-selected",
+  19  |       "true",
+  20  |       { timeout: MANAGER_SETTINGS_TIMEOUT },
+  21  |     );
+  22  | 
+  23  |     await this.page.getByRole("button", { name: "管理者を変更", exact: true }).click();
+  24  |     await this.expectMainPage(seed.shopId);
+  25  |   }
+  26  | 
+  27  |   async inviteExistingStaff(seed: ManagerCandidateSeed) {
+  28  |     await this.page
+  29  |       .getByRole("link", {
+  30  |         name: "既存スタッフを管理者として招待",
+  31  |         exact: true,
+  32  |       })
+  33  |       .click();
+  34  |     await expect(this.page).toHaveURL(
+  35  |       (url) => url.pathname === "/settings/managers/invite-staff" && url.searchParams.get("shop") === seed.shopId,
+  36  |       { timeout: MANAGER_SETTINGS_TIMEOUT },
+  37  |     );
+  38  | 
+  39  |     const candidate = this.page.getByRole("radio", {
+  40  |       name: `${seed.candidateName}を選択`,
+  41  |       exact: true,
+  42  |     });
+  43  |     await expect(candidate).not.toBeChecked({ timeout: MANAGER_SETTINGS_TIMEOUT });
+> 44  |     await candidate.click();
+      |                     ^ TimeoutError: locator.click: Timeout 10000ms exceeded.
+  45  |     await expect(candidate).toBeChecked();
+  46  | 
+  47  |     await this.page.getByRole("button", { name: "管理者として招待する", exact: true }).click();
+  48  |     const confirmation = this.page.getByRole("alertdialog", {
+  49  |       name: `${seed.candidateName}さんを招待しますか？`,
+  50  |       exact: true,
+  51  |     });
+  52  |     await expect(confirmation).toBeVisible({ timeout: MANAGER_SETTINGS_TIMEOUT });
+  53  |     await expect(confirmation.getByText(seed.candidateEmail, { exact: false })).toBeVisible();
+  54  |     await confirmation.getByRole("button", { name: "招待する", exact: true }).click();
+  55  | 
+  56  |     await expect(this.page.getByText("送信を受け付けました", { exact: true })).toBeVisible({
+  57  |       timeout: MANAGER_SETTINGS_TIMEOUT,
+  58  |     });
+  59  |     await this.expectMainPage(seed.shopId);
+  60  |     await this.expectInvitationPending(seed);
+  61  |   }
+  62  | 
+  63  |   async openDirectly(shopId: string) {
+  64  |     await this.page.goto(`/settings/managers?shop=${encodeURIComponent(shopId)}`, {
+  65  |       waitUntil: "domcontentloaded",
+  66  |     });
+  67  |     await expectAppHydrated(this.page);
+  68  |     await this.expectMainPage(shopId);
+  69  |   }
+  70  | 
+  71  |   async expectActiveManager(seed: ManagerCandidateSeed) {
+  72  |     const manager = this.managerRow(seed);
+  73  |     await expect(manager).toBeVisible({ timeout: MANAGER_SETTINGS_TIMEOUT });
+  74  |     await expect(manager.getByText(seed.candidateName, { exact: true })).toBeVisible();
+  75  |     await expect(manager.getByText(seed.candidateEmail, { exact: true })).toBeVisible();
+  76  |   }
+  77  | 
+  78  |   async reloadAndExpectActiveManager(seed: ManagerCandidateSeed) {
+  79  |     await this.page.reload({ waitUntil: "domcontentloaded" });
+  80  |     await expectAppHydrated(this.page);
+  81  |     await this.expectMainPage(seed.shopId);
+  82  |     await this.expectActiveManager(seed);
+  83  |   }
+  84  | 
+  85  |   async removeManagerRole(seed: ManagerCandidateSeed) {
+  86  |     await this.managerRow(seed).getByRole("button", { name: "管理者権限を外す", exact: true }).click();
+  87  | 
+  88  |     const confirmation = this.page.getByRole("alertdialog", {
+  89  |       name: `${seed.candidateName}さんの管理者権限を外しますか？`,
+  90  |       exact: true,
+  91  |     });
+  92  |     await expect(confirmation).toBeVisible({ timeout: MANAGER_SETTINGS_TIMEOUT });
+  93  |     await expect(
+  94  |       confirmation.getByText(`${seed.candidateName}さんの組織全体に対する管理権限を外します。`, {
+  95  |         exact: true,
+  96  |       }),
+  97  |     ).toBeVisible();
+  98  |     await confirmation.getByRole("button", { name: "管理者権限を外す", exact: true }).click();
+  99  | 
+  100 |     await expect(this.page.getByText("管理者権限を外しました", { exact: true })).toBeVisible({
+  101 |       timeout: MANAGER_SETTINGS_TIMEOUT,
+  102 |     });
+  103 |     await expect(this.managerRow(seed)).toHaveCount(0, { timeout: MANAGER_SETTINGS_TIMEOUT });
+  104 |   }
+  105 | 
+  106 |   async expectAccessRevoked(shopId: string) {
+  107 |     await this.page.goto(`/settings/managers?shop=${encodeURIComponent(shopId)}`, {
+  108 |       waitUntil: "domcontentloaded",
+  109 |     });
+  110 |     await expectAppHydrated(this.page);
+  111 |     await expect(this.page).toHaveURL(
+  112 |       (url) => url.pathname === "/settings/managers" && url.searchParams.get("shop") === shopId,
+  113 |       { timeout: MANAGER_SETTINGS_TIMEOUT },
+  114 |     );
+  115 |     await expect(this.page.getByRole("heading", { name: "この店舗を開けません", exact: true })).toBeVisible({
+  116 |       timeout: MANAGER_SETTINGS_TIMEOUT,
+  117 |     });
+  118 |     await expect(this.page.getByText("管理者設定", { exact: true })).toHaveCount(0);
+  119 |   }
+  120 | 
+  121 |   async reloadAndExpectInvitationPending(seed: ManagerCandidateSeed) {
+  122 |     await this.page.reload({ waitUntil: "domcontentloaded" });
+  123 |     await expectAppHydrated(this.page);
+  124 |     await this.expectMainPage(seed.shopId);
+  125 |     await this.expectInvitationPending(seed);
+  126 |   }
+  127 | 
+  128 |   async revokeInvitation(seed: ManagerCandidateSeed) {
+  129 |     await this.invitationRow(seed).getByRole("button", { name: "取り消す", exact: true }).click();
+  130 | 
+  131 |     const confirmation = this.page.getByRole("alertdialog", {
+  132 |       name: "管理者招待を取り消しますか？",
+  133 |       exact: true,
+  134 |     });
+  135 |     await expect(confirmation).toBeVisible({ timeout: MANAGER_SETTINGS_TIMEOUT });
+  136 |     await expect(
+  137 |       confirmation.getByText(`${seed.candidateName}さんへの招待を取り消します。`, { exact: true }),
+  138 |     ).toBeVisible();
+  139 |     await confirmation.getByRole("button", { name: "招待を取り消す", exact: true }).click();
+  140 | 
+  141 |     await expect(this.page.getByText("招待を取り消しました", { exact: true })).toBeVisible({
+  142 |       timeout: MANAGER_SETTINGS_TIMEOUT,
+  143 |     });
+  144 |     await expect(this.invitationRow(seed)).toHaveCount(0, { timeout: MANAGER_SETTINGS_TIMEOUT });
+```
