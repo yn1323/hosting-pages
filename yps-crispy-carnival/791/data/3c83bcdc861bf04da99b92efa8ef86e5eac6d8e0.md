@@ -22,7 +22,7 @@ Timeout: 10000ms
 Call log:
   - Expect "toHaveAccessibleDescription" with timeout 10000ms
   - waiting for getByRole('dialog', { name: '所属スタッフを変更', exact: true }).getByRole('checkbox', { name: '追加候補スタッフを所属スタッフにする', exact: true })
-    24 × locator resolved to <input value="on" type="checkbox" aria-invalid="false" id="checkbox:_r_f_:input" aria-label="追加候補スタッフを所属スタッフにする" aria-labelledby="checkbox:_r_f_:label" aria-describedby="shop-staff-membership-person-context-pn726q2gjr2k4yhvzabqexmqqd8cjfdj shop-staff-membership-removal-impact-pn726q2gjr2k4yhvzabqexmqqd8cjfdj"/>
+    24 × locator resolved to <input value="on" type="checkbox" aria-invalid="false" id="checkbox:_r_f_:input" aria-label="追加候補スタッフを所属スタッフにする" aria-labelledby="checkbox:_r_f_:label" aria-describedby="shop-staff-membership-person-context-pn7467hkr0v6tp5e15cd53ywrh8cjyxn shop-staff-membership-removal-impact-pn7467hkr0v6tp5e15cd53ywrh8cjyxn"/>
        - unexpected value "スタッフ。所属：所属変更対象店舗、所属変更コンテキスト店舗。 この店舗から外す。 シフト割り当てから削除 以降シフト通知は送りません"
 
 ```
