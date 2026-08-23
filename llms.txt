@@ -1,0 +1,73 @@
+# hosting-pages publishing contract
+
+This repository aggregates CI reports and deploys one constrained GitHub Pages
+artifact. Tracked report files are raw inputs; the public site is produced only
+by `.github/workflows/deploy-pages.yml`.
+
+## Branch responsibilities
+
+- `main` contains the Pages workflow and maintenance scripts, `llms.txt`, and the
+  existing `online-draft` report inputs.
+- `yps-reports` contains only current Shiftori report inputs under
+  `yps-crispy-carnival*` paths. Every update is a parentless snapshot commit, so
+  report history does not accumulate.
+- GitHub Pages combines both branches. It never publishes VRT baselines,
+  `.report-meta.json`, stale Playwright data, or VRT images that are unrelated
+  to a current diff.
+
+Public URL paths remain stable:
+
+- `/hosting-pages/yps-crispy-carnival/<pull-request>/`
+- `/hosting-pages/yps-crispy-carnival-vrt/pr-<pull-request>/`
+- `/hosting-pages/yps-crispy-carnival-vrt/branches/<develop-or-main>/`
+- `/hosting-pages/online-draft/...`
+
+## Shiftori writer contract
+
+Shiftori workflows must use `scripts/publishHostingReport.mjs` from
+`yn1323/yps-crispy-carnival`. The publisher:
+
+- verifies that a pull request or branch still points to the tested source SHA;
+- allows only the documented Shiftori destination paths;
+- rejects symlinks and malformed report inputs;
+- replaces one report and an optional branch baseline;
+- writes schema-versioned source/run metadata and a deployment marker;
+- retries concurrent updates with `force-with-lease` compare-and-swap;
+- creates a parentless `yps-reports` snapshot; and
+- dispatches the Pages workflow without putting credentials in a remote URL.
+
+Do not restore direct Shiftori pushes to `main`, `git pull --rebase` publishing,
+unconditional force pushes, or warning-only deployment timeouts.
+
+## online-draft compatibility
+
+The `online-draft` source repository is intentionally outside the Shiftori
+migration. Its existing `main` writes remain supported, and its tracked report
+tree is preserved unchanged. The Pages builder publishes only Playwright data
+referenced by the current embedded report without deleting the raw inputs.
+
+Do not require an `online-draft` source-workflow change without a separate,
+explicit migration.
+
+## Retention and publication safety
+
+- Open Shiftori pull-request reports are retained regardless of PR number.
+- Closed or merged Shiftori reports are removed after seven days.
+- Branch VRT reports and baselines are replaced in place and are not subject to
+  pull-request retention.
+- Missing or invalid PR state/metadata must stop deletion rather than guessing.
+- The public artifact must contain no symlinks or hard links, must pass the
+  high-confidence secret scan (including embedded Playwright report data), and
+  must remain below the configured 900 MiB hard limit.
+- A source workflow may post a final report link only after its exact deployment
+  marker is available. A timeout is a workflow failure.
+
+## Operational maintenance
+
+`yn1323/yps-crispy-carnival` owns the scheduled maintenance workflow because its
+scoped `GITHUB_TOKEN` can read source pull requests. It runs this repository's
+maintenance scripts, uses `HOSTING_PAGES_TOKEN` only for the hosted snapshot,
+and rewrites `yps-reports` as a new parentless snapshot. A one-time history reset
+of `main` removes accumulated history while preserving the current
+`online-draft` tree exactly; do not automate that reset while an uncoordinated
+legacy `main` writer remains.
